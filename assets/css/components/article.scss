@@ -1,6 +1,14 @@
 $article-padding: 24px;
 $scrollbar-width: 18px;
 
+// Animation and tranisition timings
+$article-body-in-delay: $article-in-duration * 0.625;
+$article-body-in-duration: $article-in-duration * 0.05;
+$article-body-out-delay: $article-out-duration * 0;
+$article-body-out-duration: $article-out-duration * 0;
+
+$article-header-in-delay: $article-in-duration * 0;
+$article-header-in-duration: $article-in-duration * 0.625;
 
 // The fixed aritcle elements need a specially calculated width
 $fixed-header-padding: $article-padding + $scrollbar-width*2 + 5px;
@@ -26,22 +34,28 @@ $fixed-header-padding: $article-padding + $scrollbar-width*2 + 5px;
     // animation-fill-mode: forwards;
 
     & > .article-header-fixed {
-      width: calc(100% - #{$fixed-header-padding});
       cursor: default;
+      animation-name: header-in;
+      animation-fill-mode: forwards;
+      animation-delay: $article-in-duration * 0.1875;
 
       & > .article-title {
         // animation-name: anim-title-in;
       }
+
+      & > .article-divider {
+        animation-name: divider-in;
+        animation-delay: $article-header-in-delay;
+        animation-duration: $article-header-in-duration;
+      }
     }
 
     & > .article-body {
-      // animation-name: delayed-display;
-      // animation-fill-mode: forwards;
       width: calc(100%);
       max-height: none;
       opacity: 1;
-      // transition-delay: 2.5s, 2.5s, 2.5s;
-      // transition-duration: 0s, 0s, 250ms;
+      transition-delay: $article-body-in-delay;
+      transition-duration: 0s, 0s, $article-body-in-duration;
     }
 
     & > .article-footer-fade {
@@ -119,64 +133,53 @@ $fixed-header-padding: $article-padding + $scrollbar-width*2 + 5px;
   line-height: 1.6;
   opacity: 0;
   text-align: justify;
-  // transition-property: width, max-height, opacity;
-  // transition-delay: 0s, 0s, 0s;
-  // transition-duration: 0s, 0s, 0s;
-  // animation-name: delayed-display-out;
-  // animation-duration: 3s;
+  transition-property: width, max-height, opacity;
+  transition-delay: $article-body-out-delay;
+  transition-duration: $article-body-in-duration;
 }
 
 
 
-& > .article {
+// Animations
+@keyframes header-in {
+  from {
+    width: auto;
+  }
 
-      & > .article-header-fixed {
-        & > .article-title {
-          animation-direction: normal;
-        }
+  to {
+    width: calc(100% - #{$fixed-header-padding});
+  }
+}
 
-        & > .article-divider {
-          animation-name: anim-divider-in;
-        }
-      }
+@keyframes divider-in {
 
-      &:not(.activated) {
-        margin: 0 24px 0 0;
-        max-height: 0;
-        transition-delay: 750ms;
+  /* 0 */
+  from {
+    width: 100%;
+  }
 
-        & > .article-header-fixed {
+  /* 250ms */
+  10% {
+    width: 100%;
+  }
 
-          & > .article-title {
-            animation-name: anim-hidden-title-in;
-          }
+  /* 750 */
+  30% {
+    width: 5px;
+  }
 
-          & > .article-divider {
-            animation-name: anim-divider-hidden-in;
-          }
-        }
-      }
+  /* 1.75s */
+  70% {
+    width: 5px;
+  }
 
-      &.activated {
-        width: calc(100% + 18px);
-        animation-name: article-full-view;
-        animation-delay: 2.5s;
-        animation-fill-mode: forwards;
+  /* 2.25s */
+  90% {
+    width: 100%;
+  }
 
-        & > .article-header-fixed {
-          & > .article-title {
-            animation-name: anim-title-in;
-          }
-        }
-
-        & > .article-body {
-          // animation-name: delayed-display;
-          // animation-fill-mode: forwards;
-          width: 100%;
-          max-height: none;
-          opacity: 1;
-          transition-delay: 2.5s, 2.5s, 2.5s;
-          transition-duration: 0s, 0s, 250ms;
-        }
-      }
-    }
+  /* 2.5s */
+  to {
+    width: 100%;
+  }
+}

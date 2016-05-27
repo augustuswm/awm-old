@@ -25,12 +25,20 @@ body {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch; }
     .article.active > .article-header-fixed {
-      width: calc(100% - 65px);
-      cursor: default; }
+      cursor: default;
+      animation-name: header-in;
+      animation-fill-mode: forwards;
+      animation-delay: 0.75s; }
+      .article.active > .article-header-fixed > .article-divider {
+        animation-name: divider-in;
+        animation-delay: 0s;
+        animation-duration: 2.5s; }
     .article.active > .article-body {
       width: calc(100%);
       max-height: none;
-      opacity: 1; }
+      opacity: 1;
+      transition-delay: 2.5s;
+      transition-duration: 0s, 0s, 0.2s; }
     .article.active > .article-footer-fade {
       position: fixed;
       width: calc(100% - 65px);
@@ -76,36 +84,36 @@ body {
   font-weight: 300;
   line-height: 1.6;
   opacity: 0;
-  text-align: justify; }
+  text-align: justify;
+  transition-property: width, max-height, opacity;
+  transition-delay: 0s;
+  transition-duration: 0.2s; }
 
-> .article > .article-header-fixed > .article-title {
-  animation-direction: normal; }
+@keyframes header-in {
+  from {
+    width: auto; }
+  to {
+    width: calc(100% - 65px); } }
 
-> .article > .article-header-fixed > .article-divider {
-  animation-name: anim-divider-in; }
-
-> .article:not(.activated) {
-  margin: 0 24px 0 0;
-  max-height: 0;
-  transition-delay: 750ms; }
-  > .article:not(.activated) > .article-header-fixed > .article-title {
-    animation-name: anim-hidden-title-in; }
-  > .article:not(.activated) > .article-header-fixed > .article-divider {
-    animation-name: anim-divider-hidden-in; }
-
-> .article.activated {
-  width: calc(100% + 18px);
-  animation-name: article-full-view;
-  animation-delay: 2.5s;
-  animation-fill-mode: forwards; }
-  > .article.activated > .article-header-fixed > .article-title {
-    animation-name: anim-title-in; }
-  > .article.activated > .article-body {
-    width: 100%;
-    max-height: none;
-    opacity: 1;
-    transition-delay: 2.5s, 2.5s, 2.5s;
-    transition-duration: 0s, 0s, 250ms; }
+@keyframes divider-in {
+  /* 0 */
+  from {
+    width: 100%; }
+  /* 250ms */
+  10% {
+    width: 100%; }
+  /* 750 */
+  30% {
+    width: 5px; }
+  /* 1.75s */
+  70% {
+    width: 5px; }
+  /* 2.25s */
+  90% {
+    width: 100%; }
+  /* 2.5s */
+  to {
+    width: 100%; } }
 
 .article-list {
   position: absolute;
@@ -119,7 +127,10 @@ body {
   list-style: none;
   color: #000000;
   overflow: hidden;
-  transform: translateX(-50%); }
+  transform: translateX(-50%);
+  transition-property: max-width;
+  transition-duration: 0.8s;
+  transition-delay: 0.8s; }
   .article-list.article-activated {
     max-width: 768px; }
     .article-list.article-activated > .article:not(.active) > .article-header-fixed {

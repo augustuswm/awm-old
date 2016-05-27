@@ -13,9 +13,9 @@
   color: $back-color;
   overflow: hidden;
   transform: translateX(-50%);
-  // transition-property: left, max-width, transform;
-  // transition-duration: $article-in-duration * 0.2;
-  // transition-delay: $article-in-duration * 0.2;
+  transition-property: max-width;
+  transition-duration: $article-in-duration * 0.2;
+  transition-delay: $article-in-duration * 0.2;
 
   &.article-activated {
     max-width: 768px;
