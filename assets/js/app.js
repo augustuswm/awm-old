@@ -1,11 +1,11 @@
+var z = document.querySelectorAll.bind(document);
 require('./../css/main.scss');
-
-var z = require('zest');
 require('particles.js');
+var particleConfig = require('./../data/particles.json');
 
-particlesJS.load(
+window.particlesJS(
   'particles',
-  'assets/data/particles.json'
+  particleConfig
 );
 
 var list = z('.article-list')[0];
@@ -22,10 +22,10 @@ var articleSelectHandler = function articleSelectHandler(e) {
         article.classList.remove('activated');
       }
     );
-    target.classList.add('activated');
+    target.classList.add('active');
     list.classList.add('article-activated');
   } else {
-    // target.classList.remove('activated');
+    target.classList.remove('active');
     list.classList.remove('article-activated');
   }
 };

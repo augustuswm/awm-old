@@ -1,0 +1,29 @@
+@import "article";
+
+.article-list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - #{$scrollbar-width});
+  width: 100%;
+  max-width: 480px;
+  margin: 0 24px;
+  padding: 0;
+  list-style: none;
+  color: $back-color;
+  overflow: hidden;
+  transform: translateX(-50%);
+  // transition-property: left, max-width, transform;
+  // transition-duration: $article-in-duration * 0.2;
+  // transition-delay: $article-in-duration * 0.2;
+
+  &.article-activated {
+    max-width: 768px;
+
+    & > .article:not(.active) {
+      & > .article-header-fixed {
+        display: none;
+      }
+    }
+  }
+}

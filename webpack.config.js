@@ -10,18 +10,18 @@ module.exports = {
   },
   module: {
     loaders: [
-      // Extract css files
+      {
+        test: /\.json$/,
+        loader: "json-loader"
+      },
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       },
-      // Optionally extract less files
-      // or any other compile-to-css language
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
       }
-      // You could also use other loaders the same way. I. e. the autoprefixer-loader
     ]
   },
   plugins: [
