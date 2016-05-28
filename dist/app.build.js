@@ -59,13 +59,13 @@
 	var articleSelectHandler = function articleSelectHandler(e) {
 
 	  var target = e.currentTarget,
-	      isActivated = target.classList.contains('activated')
-	      currentActivated = z('.activated');
+	      isActivated = target.classList.contains('active')
+	      currentActivated = z('.article.active');
 
 	  if (!isActivated) {
 	    currentActivated.forEach(
 	      function(article) {
-	        article.classList.remove('activated');
+	        article.classList.remove('active');
 	      }
 	    );
 	    target.classList.add('active');

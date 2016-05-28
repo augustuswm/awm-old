@@ -5,7 +5,8 @@
 
 body {
   margin: 0;
-  background-color: #000000; }
+  background-color: #000000;
+  overflow: hidden; }
 
 #particles {
   position: fixed;
@@ -18,17 +19,17 @@ body {
   padding: 0 42px 0 24px;
   overflow: hidden; }
   .article.active {
-    position: absolute;
-    top: 0;
-    bottom: 24px;
     width: calc(100% + 18px);
     overflow-y: scroll;
-    -webkit-overflow-scrolling: touch; }
+    -webkit-overflow-scrolling: touch;
+    animation-name: transition-to-absolute;
+    animation-delay: 2.5s;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards; }
     .article.active > .article-header-fixed {
-      cursor: default;
-      animation-name: header-in;
-      animation-fill-mode: forwards;
-      animation-delay: 0.75s; }
+      cursor: default; }
+      .article.active > .article-header-fixed > .article-title {
+        animation-name: title-in; }
       .article.active > .article-header-fixed > .article-divider {
         animation-name: divider-in;
         animation-delay: 0s;
@@ -36,9 +37,10 @@ body {
     .article.active > .article-body {
       width: calc(100%);
       max-height: none;
+      margin-top: 0;
       opacity: 1;
       transition-delay: 2.5s;
-      transition-duration: 0s, 0s, 0.2s; }
+      transition-duration: 0s, 0s, 0s, 0.2s; }
     .article.active > .article-footer-fade {
       position: fixed;
       width: calc(100% - 65px);
@@ -55,15 +57,23 @@ body {
   .article:hover .article-header-fixed > .article-divider {
     background-color: #ff5b5b; }
 
-.article-header-fixed {
+.article-header-fade {
   position: fixed;
-  padding-bottom: 24px;
+  width: calc(100% - 65px);
+  padding-bottom: 36px;
   background: -moz-linear-gradient(top, black 0%, transparent 100%);
   /* FF3.6-15 */
   background: -webkit-linear-gradient(top, black 0%, transparent 100%);
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, black 0%, transparent 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
+
+.article-header-fade-spacer {
+  line-height: 2.4;
+  visibility: hidden; }
+
+.article-header-fixed {
+  position: fixed;
   overflow: hidden;
   cursor: pointer; }
 
@@ -71,29 +81,62 @@ body {
   visibility: hidden; }
 
 .article-title {
-  line-height: 2.4; }
+  line-height: 2.4;
+  animation-name: title-out;
+  animation-delay: 0s;
+  animation-duration: 2.5s; }
 
 .article-divider {
   width: 100%;
   height: 5px;
-  background-color: #d3d3d3; }
+  background-color: #d3d3d3;
+  animation-name: divider-out;
+  animation-delay: 0s;
+  animation-duration: 2.5s; }
 
 .article-body {
   width: 0;
   max-height: 0;
+  margin-top: -24px;
   font-weight: 300;
   line-height: 1.6;
-  opacity: 0;
   text-align: justify;
-  transition-property: width, max-height, opacity;
+  opacity: 0;
+  transition-property: width, max-height, margin-top, opacity;
   transition-delay: 0s;
-  transition-duration: 0.2s; }
+  transition-duration: 0s; }
 
-@keyframes header-in {
+@keyframes transition-to-absolute {
   from {
-    width: auto; }
+    postion: relative; }
   to {
-    width: calc(100% - 65px); } }
+    position: absolute;
+    top: 0;
+    bottom: 24px; } }
+
+@keyframes title-in {
+  from {
+    transform: translateY(0); }
+  /* 250ms */
+  10% {
+    transform: translateY(100%); }
+  /* 2s */
+  80% {
+    transform: translateY(100%); }
+  to {
+    transform: translateY(0); } }
+
+@keyframes title-out {
+  from {
+    transform: translateY(0); }
+  /* 500ms */
+  20% {
+    transform: translateY(100%); }
+  /* 2.25s */
+  90% {
+    transform: translateY(100%); }
+  to {
+    transform: translateY(0); } }
 
 @keyframes divider-in {
   /* 0 */
@@ -102,18 +145,78 @@ body {
   /* 250ms */
   10% {
     width: 100%; }
-  /* 750 */
-  30% {
-    width: 5px; }
-  /* 1.75s */
-  70% {
-    width: 5px; }
   /* 2.25s */
   90% {
     width: 100%; }
   /* 2.5s */
   to {
-    width: 100%; } }
+    width: 100%; }
+  /* 750 */
+  30% {
+    width: 5px; }
+  /* 1.75s */
+  70% {
+    width: 5px; } }
+
+@keyframes divider-out {
+  /* 0 */
+  from {
+    width: 100%; }
+  /* 250ms */
+  10% {
+    width: 100%; }
+  /* 2.25s */
+  90% {
+    width: 100%; }
+  /* 2.5s */
+  to {
+    width: 100%; }
+  /* 750 */
+  30% {
+    width: 5px; }
+  /* 1.75s */
+  70% {
+    width: 5px; } }
+
+@keyframes divider-hidden-in {
+  /* 0 */
+  from {
+    width: 100%; }
+  /* 250ms */
+  10% {
+    width: 100%; }
+  /* 2.25s */
+  90% {
+    width: 100%; }
+  /* 2.5s */
+  to {
+    width: 100%; }
+  /* 750 */
+  30% {
+    width: 0; }
+  /* 1.75s */
+  70% {
+    width: 0; } }
+
+@keyframes divider-hidden-out {
+  /* 0 */
+  from {
+    width: 100%; }
+  /* 250ms */
+  10% {
+    width: 100%; }
+  /* 2.25s */
+  90% {
+    width: 100%; }
+  /* 2.5s */
+  to {
+    width: 100%; }
+  /* 750 */
+  30% {
+    width: 0; }
+  /* 1.75s */
+  70% {
+    width: 0; } }
 
 .article-list {
   position: absolute;
@@ -134,4 +237,10 @@ body {
   .article-list.article-activated {
     max-width: 768px; }
     .article-list.article-activated > .article:not(.active) > .article-header-fixed {
-      display: none; }
+      cursor: default; }
+      .article-list.article-activated > .article:not(.active) > .article-header-fixed > .article-title {
+        animation-name: title-in; }
+      .article-list.article-activated > .article:not(.active) > .article-header-fixed > .article-divider {
+        animation-name: divider-hidden-in;
+        animation-delay: 0s;
+        animation-duration: 2.5s; }

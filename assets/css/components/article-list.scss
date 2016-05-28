@@ -21,8 +21,19 @@
     max-width: 768px;
 
     & > .article:not(.active) {
+
       & > .article-header-fixed {
-        display: none;
+        cursor: default;
+
+        & > .article-title {
+          animation-name: title-in;
+        }
+
+        & > .article-divider {
+          animation-name: divider-hidden-in;
+          animation-delay: $article-header-in-delay;
+          animation-duration: $article-header-in-duration;
+        }
       }
     }
   }
