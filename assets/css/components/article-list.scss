@@ -21,6 +21,10 @@
     max-width: 768px;
 
     & > .article:not(.active) {
+      animation-name: article-hide;
+      animation-delay: $article-hide-delay;
+      animation-duration: 0s;
+      animation-fill-mode: forwards;
 
       & > .article-header-fixed {
         cursor: default;

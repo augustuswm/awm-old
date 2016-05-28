@@ -17,7 +17,7 @@ var articleSelectHandler = function articleSelectHandler(e) {
       currentActivated = z('.article.active');
 
   if (!isActivated) {
-    currentActivated.forEach(
+    [...currentActivated].forEach(
       function(article) {
         article.classList.remove('active');
       }
@@ -32,7 +32,7 @@ var articleSelectHandler = function articleSelectHandler(e) {
 
 var articles = z('.article');
 
-articles.forEach(
+[...articles].forEach(
   function(article) {
     article.addEventListener('click', articleSelectHandler);
   }
